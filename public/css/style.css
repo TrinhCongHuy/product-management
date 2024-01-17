@@ -1,0 +1,109 @@
+/* Header */
+a:hover {
+    text-decoration: none;
+}
+.header {
+    padding: 3px 0;
+    border-bottom: 1px solid #c8c4c4;
+}
+.logo-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+.menu-list {
+    display: flex;
+    list-style: none;
+    gap: 3em;
+    justify-content: center;
+    margin: auto;
+}
+.menu-list .menu-list--item a{
+    font-size: 1.1em;
+    color: #999;
+    text-decoration: none;
+}
+.menu-list .menu-list--item:hover a {
+    color: rgb(182, 172, 105);
+}
+/*End Header */
+/* products */
+.product-item {
+    padding: 10px;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    position: relative;
+}
+.product-item .product-img {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
+}
+.product-item .product-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all .3s ease-in-out;
+    -webkit-transition: all .3s ease-in-out;
+    -moz-transition: all .3s ease-in-out;
+    -ms-transition: all .3s ease-in-out;
+    -o-transition: all .3s ease-in-out;
+}
+.product-item .product-img:hover img {
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -o-transform: scale(1.1);
+    transform-origin: center center;
+}
+.product-title {
+    font-size: 1.2em;
+    padding: 9px 0;
+    margin-bottom: unset;
+}
+.product-title a {
+    color: red;
+}
+.product-price--new {
+    font-size: 1.5em;
+    margin-right: 10px;
+}
+.product-price--old {
+    font-size: 1.2em;
+    text-decoration: line-through;
+    color: #999;
+}
+.product-discount {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 5px;
+    background-color: rgb(232, 102, 102);
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    color: #ffffff;
+    font-size: .8em;
+}
+
+/* End products */
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 9px;
+    background-color: rgb(35, 34, 34);
+    color: #ffffff;
+}
+/*End Footer */
