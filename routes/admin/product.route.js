@@ -6,7 +6,7 @@ const router = express.Router()
 const uploadCloud = require("../../middleware/admin/uploadCloud.middleware")
 
 const upload = multer()
-const validates = require("../../validates/admin/productValidate")
+const validates = require("../../validates/admin/product.validate")
 
 router.get('/', controller.index)
 

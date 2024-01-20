@@ -1,4 +1,5 @@
 const express = require('express')
+const path = require('path');
 const methodOverride = require('method-override')
 const flash = require('express-flash')
 const bodyParser = require('body-parser')
@@ -24,6 +25,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser('keyboard cat'));
 app.use(session({ cookie: { maxAge: 60000 }}));
 app.use(flash());
+
+/* New Route to the TinyMCE Node module */
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
+
 
 app.locals.prefixAdmin = systemConfig.prefixAdmin
 

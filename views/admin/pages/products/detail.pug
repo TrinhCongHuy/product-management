@@ -37,6 +37,6 @@ block main
                             span(class="badge badge-danger") Dừng hoạt động
                 if (product.description)
                     div(class="product-description mt-2")
-                        p #{product.description}
+                        p !{product.description}
 
     a(href=`${prefixAdmin}/products/edit/${product.id}` class="btn btn-warning btn-lg ml-5") Chỉnh sửa

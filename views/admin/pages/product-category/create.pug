@@ -1,13 +1,11 @@
 extends ../../layouts/default.pug
-include ../../mixins/alert.pug
-block main 
-    +alert-warning(3000)
 
-    h1(class="mb-5") Thêm mới sản phẩm
+block main 
+    
+    h1(class="mb-5") Thêm mới danh mục sản phẩm
 
     form(
-        action=`${prefixAdmin}/products/create`
-        id="form-create-product"
+        action=`${prefixAdmin}/product-category/create`
         method="POST"
         enctype="multipart/form-data"
     )
@@ -21,43 +19,21 @@ block main
                 require
             ) 
         div(class="form-group")
+            label(for="parent_id") Danh mục cha
+            input(
+                id="parent_id"
+                type="text"
+                class="form-control"
+                name="parent_id"
+                require
+            ) 
+        div(class="form-group")
             label(for="desc") Mô tả
             textarea(
                 id="desc"
                 class="form-control"
                 name="desc"
                 rows="5"
-            ) 
-        div(class="form-group")
-            label(for="price") Giá
-            input(
-                id="price"
-                type="number"
-                class="form-control"
-                name="price"
-                value="0"
-                min="0"
-                require
-            ) 
-        div(class="form-group")
-            label(for="discount") Giảm giá
-            input(
-                id="discount"
-                type="number"
-                class="form-control"
-                name="discountPercentage"
-                value="0"
-                min="0"
-            ) 
-        div(class="form-group")
-            label(for="stock") Số lượng
-            input(
-                id="stock"
-                type="number"
-                class="form-control"
-                name="stock"
-                value="0"
-                min="0"
             ) 
         div(
             class="form-group"

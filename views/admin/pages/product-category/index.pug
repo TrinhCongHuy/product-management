@@ -1,0 +1,21 @@
+extends ../../layouts/default.pug
+
+block main 
+
+    h1.content-title Danh mục sản phẩm
+
+    .card.mt-3
+        .card-header Danh sách
+        .card-body
+            .row 
+                .col-8
+                    
+                .col-4 
+                    a(
+                        href=`${prefixAdmin}/product-category/create`
+                        class="btn btn-outline-success"
+                    ) + Thêm mới
+
+            
+            
+                    
