@@ -1,16 +1,12 @@
 extends ../../layouts/default.pug
-include ../../mixins/alert.pug
 include ../../mixins/select-tree.pug
 
 block main 
-    +alert-success(3000)
-    +alert-error(3000)
 
-    h1(class="mb-5") Chỉnh sửa sản phẩm
+    h1(class="mb-5") Chỉnh sửa danh mục
     
     form(
-        action=`${prefixAdmin}/products/edit/${product.id}?_method=PATCH`
-        id="form-edit-product"
+        action=`${prefixAdmin}/product-category/edit/${data.id}?_method=PATCH`
         method="POST"
         enctype="multipart/form-data"
     )
@@ -21,18 +17,19 @@ block main
                 type="text"
                 class="form-control"
                 name="title"
-                value=product.title
+                value=data.title
             ) 
         div(class="form-group")
-            label(for="product_category_id") Danh mục
+            label(for="parent_id") Danh mục cha
             select(
-                id="product_category_id"
+                id="parent_id"
                 class="form-control"
-                name="product_category_id"
+                name="parent_id"
             )
-                option(value="") -- Chọn danh mục --
-                if(category)
-                    +select-tree(category, 1, product.product_category_id)
+                option(value="") -- Chọn danh mục cha --
+                if(records)
+                    +select-tree(records, 1, data.parent_id)
+
         div(class="form-group")
             label(for="desc") Mô tả
             textarea(
@@ -40,37 +37,7 @@ block main
                 class="form-control"
                 name="desc"
                 rows="5"
-            ) #{product.description}
-        div(class="form-group")
-            label(for="price") Giá
-            input(
-                id="price"
-                type="number"
-                class="form-control"
-                name="price"
-                min="0"
-                value=product.price
-            ) 
-        div(class="form-group")
-            label(for="discount") Giảm giá
-            input(
-                id="discount"
-                type="number"
-                class="form-control"
-                name="discountPercentage"
-                min="0"
-                value=product.discountPercentage
-            ) 
-        div(class="form-group")
-            label(for="stock") Số lượng
-            input(
-                id="stock"
-                type="number"
-                class="form-control"
-                name="stock"
-                min="0"
-                value=product.stock
-            ) 
+            ) #{data.description}
         div(
             class="form-group"
             upload-image
@@ -85,7 +52,7 @@ block main
                 upload-image-input
             ) 
             img(
-                src=product.thumbnail
+                src=data.thumbnail
                 upload-image-preview
                 class="image-preview mt-3"
             )
@@ -97,7 +64,7 @@ block main
                 class="form-control"
                 name="position"
                 placeholder="Tự động tăng"
-                value=product.position
+                value=data.position
             ) 
         div(class="form-group form-check form-check-inline")
             input(
@@ -106,7 +73,7 @@ block main
                 class="form-check-input"
                 name="status"
                 value="active"
-                checked=(product.status == "active" ? true : false)
+                checked=(data.status == "active" ? true : false)
             ) 
             label(for="statusActive" class="form-check-label") Hoạt động
         div(class="form-group form-check form-check-inline")
@@ -116,7 +83,7 @@ block main
                 class="form-check-input"
                 name="status"
                 value="inactive"
-                checked=(product.status == "inactive" ? true : false)
+                checked=(data.status == "inactive" ? true : false)
             ) 
             label(for="statusInActive" class="form-check-label") Dừng hoạt động
         div(class="form-group")
