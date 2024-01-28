@@ -3,13 +3,13 @@ include ../../mixins/alert.pug
 
 block main 
     +alert-error(3000) 
-    +alert-success(3000)
+    +alert-success(3000) 
 
-    h1(class="mb-5") Thêm mới tài khoản
-     
+    h1(class="mb-5") Chỉnh sửa tài khoản
+    
     
     form(
-        action=`${prefixAdmin}/accounts/create`
+        action=`${prefixAdmin}/accounts/edit/${data.id}?_method=PATCH`
         method="POST"
         enctype="multipart/form-data"
     )
@@ -20,6 +20,7 @@ block main
                 type="text"
                 class="form-control"
                 name="fullName"
+                value=data.fullName
                 require
             ) 
         div(class="form-group")
@@ -29,6 +30,7 @@ block main
                 type="text"
                 class="form-control"
                 name="email"
+                value=data.email
                 require
             )
         div(class="form-group")
@@ -47,6 +49,7 @@ block main
                 type="text"
                 class="form-control"
                 name="phone"
+                value=data.phone
             ) 
         div(
             class="form-group"
@@ -61,12 +64,20 @@ block main
                 accept="image/*"
                 upload-image-input
             ) 
+            img(
+                src=data.avatar
+                upload-image-preview
+                class="image-preview mt-3"
+            )
         div(class="form-group")
             label(for="role_id") Phân quyền
             select(name="role_id" id="role_id" class="form-control")
                 option(disable) -- Chọn --
                 each item in roles
-                    option(value=item.id) #{item.title}
+                    option(
+                        value=item.id 
+                        selected=(item.id == data.role_id ? true : false)
+                    ) #{item.title}
 
         div(class="form-group form-check form-check-inline")
             input(
@@ -91,4 +102,4 @@ block main
             button(
                 type="submit"
                 class="btn btn-primary"
-            ) Tạo mới
+            ) Cập nhật

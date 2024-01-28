@@ -6,3 +6,4 @@ module.exports.generateRandomString = (length) => {
      }
      return token;
 }
+

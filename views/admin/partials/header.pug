@@ -5,4 +5,9 @@ header(class="header")
                 .header-logo    
                     a(href="/admin/dashboard") HUY ADMIN 
             .col-10
-                .header-social
+                div(class="text-right")
+                    a(
+                        href=`${prefixAdmin}/auth/logout`
+                        type="button" 
+                        class="btn btn-danger btn-sm"
+                    ) Đăng xuất
