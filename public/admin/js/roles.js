@@ -42,13 +42,11 @@ const dataPermissions = document.querySelector("[data-records]")
 if (dataPermissions) {
     const records = JSON.parse(dataPermissions.getAttribute("data-records"))
     records.forEach((record, index) => {
-        console.log(record)
-        console.log(index)
 
         const permissions = record.permissions
         permissions.forEach(permission => {
             const row = tablePermissions.querySelector(`[data-name="${permission}"]`)
-            console.log(row)
+
             const input = row.querySelectorAll("input")[index]
             input.checked = true
         })

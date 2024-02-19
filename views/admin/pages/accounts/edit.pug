@@ -1,105 +1,108 @@
 extends ../../layouts/default.pug
 include ../../mixins/alert.pug
 
-block main 
-    +alert-error(3000) 
-    +alert-success(3000) 
+block main
+    if (role.permissions.includes("account_edit"))
+        +alert-error(3000) 
+        +alert-success(3000) 
 
-    h1(class="mb-5") Chỉnh sửa tài khoản
-    
-    
-    form(
-        action=`${prefixAdmin}/accounts/edit/${data.id}?_method=PATCH`
-        method="POST"
-        enctype="multipart/form-data"
-    )
-        div(class="form-group")
-            label(for="fullName") Họ tên *
-            input(
-                id="fullName"
-                type="text"
-                class="form-control"
-                name="fullName"
-                value=data.fullName
-                require
-            ) 
-        div(class="form-group")
-            label(for="email") Email *
-            input(
-                id="email"
-                type="text"
-                class="form-control"
-                name="email"
-                value=data.email
-                require
-            )
-        div(class="form-group")
-            label(for="password") Mật khẩu *
-            input(
-                id="password"
-                type="password"
-                class="form-control"
-                name="password"
-                require
-            )
-        div(class="form-group")
-            label(for="phone") Số điện thoại
-            input(
-                id="phone"
-                type="text"
-                class="form-control"
-                name="phone"
-                value=data.phone
-            ) 
-        div(
-            class="form-group"
-            upload-image
-            )
-            label(for="avatar") Avatar
-            input(
-                id="avatar"
-                type="file"
-                class="form-control-file"
-                name="avatar"
-                accept="image/*"
-                upload-image-input
-            ) 
-            img(
-                src=data.avatar
-                upload-image-preview
-                class="image-preview mt-3"
-            )
-        div(class="form-group")
-            label(for="role_id") Phân quyền
-            select(name="role_id" id="role_id" class="form-control")
-                option(disable) -- Chọn --
-                each item in roles
-                    option(
-                        value=item.id 
-                        selected=(item.id == data.role_id ? true : false)
-                    ) #{item.title}
+        h1(class="mb-5") Chỉnh sửa tài khoản
+        
+        
+        form(
+            action=`${prefixAdmin}/accounts/edit/${data.id}?_method=PATCH`
+            method="POST"
+            enctype="multipart/form-data"
+        )
+            div(class="form-group")
+                label(for="fullName") Họ tên *
+                input(
+                    id="fullName"
+                    type="text"
+                    class="form-control"
+                    name="fullName"
+                    value=data.fullName
+                    require
+                ) 
+            div(class="form-group")
+                label(for="email") Email *
+                input(
+                    id="email"
+                    type="text"
+                    class="form-control"
+                    name="email"
+                    value=data.email
+                    require
+                )
+            div(class="form-group")
+                label(for="password") Mật khẩu *
+                input(
+                    id="password"
+                    type="password"
+                    class="form-control"
+                    name="password"
+                    require
+                )
+            div(class="form-group")
+                label(for="phone") Số điện thoại
+                input(
+                    id="phone"
+                    type="text"
+                    class="form-control"
+                    name="phone"
+                    value=data.phone
+                ) 
+            div(
+                class="form-group"
+                upload-image
+                )
+                label(for="avatar") Avatar
+                input(
+                    id="avatar"
+                    type="file"
+                    class="form-control-file"
+                    name="avatar"
+                    accept="image/*"
+                    upload-image-input
+                ) 
+                img(
+                    src=data.avatar
+                    upload-image-preview
+                    class="image-preview mt-3"
+                )
+            div(class="form-group")
+                label(for="role_id") Phân quyền
+                select(name="role_id" id="role_id" class="form-control")
+                    option(disable) -- Chọn --
+                    each item in roles
+                        option(
+                            value=item.id 
+                            selected=(item.id == data.role_id ? true : false)
+                        ) #{item.title}
 
-        div(class="form-group form-check form-check-inline")
-            input(
-                id="statusActive"
-                type="radio"
-                class="form-check-input"
-                name="status"
-                value="active"
-                checked
-            ) 
-            label(for="statusActive" class="form-check-label") Hoạt động
-        div(class="form-group form-check form-check-inline")
-            input(
-                id="statusInActive"
-                type="radio"
-                class="form-check-input"
-                name="status"
-                value="inactive"
-            ) 
-            label(for="statusInActive" class="form-check-label") Dừng hoạt động
-        div(class="form-group")
-            button(
-                type="submit"
-                class="btn btn-primary"
-            ) Cập nhật
+            div(class="form-group form-check form-check-inline")
+                input(
+                    id="statusActive"
+                    type="radio"
+                    class="form-check-input"
+                    name="status"
+                    value="active"
+                    checked
+                ) 
+                label(for="statusActive" class="form-check-label") Hoạt động
+            div(class="form-group form-check form-check-inline")
+                input(
+                    id="statusInActive"
+                    type="radio"
+                    class="form-check-input"
+                    name="status"
+                    value="inactive"
+                ) 
+                label(for="statusInActive" class="form-check-label") Dừng hoạt động
+            div(class="form-group")
+                button(
+                    type="submit"
+                    class="btn btn-primary"
+                ) Cập nhật
+    else 
+        h1 Bạn không có quyền truy cập trang này!
