@@ -1,7 +1,5 @@
 const Product = require('../../models/product.model')
-// const ProductCategory = require('../../models/product-category.model')
 const productsHelper = require('../../helpers/products')
-// const productCategoryHelper = require('../../helpers/product-category')
 
 
 // [GET] /search
