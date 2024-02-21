@@ -2,34 +2,58 @@ extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
 
 block main
-    .container.my-3 
+    .container.my-5
         .row
             .col-12 
                 +box-head("Chi tiết sản phẩm")   
 
-        div(class="detail-product")
+        .product-detail
             .row.dis-flex 
-                .col-4.p-5
+                .col-6.p-5
                     if (product.thumbnail)
                         img(
                             src=product.thumbnail 
                             class="image-product"
                             style="width: 100%"
                         )
-                .col-8.px-2.py-5
+                .col-6.px-2.py-5
                     if (product.title)
                         div(class="product-title")
                             h3 #{product.title}
+                    if (product.priceNew)
+                        div(class="product-priceNew mt-2")
+                            <b>#{product.priceNew}$</b>
                     if (product.price)
                         div(class="product-price mt-2")
-                            span Giá: <b>#{product.price}$</b>
+                            <b>#{product.price}$</b>
                     if (product.discountPercentage)
                         div(class="product-discountPercentage mt-2")
-                            span Giảm giá: <b>#{product.discountPercentage}%</b>
+                            span Giảm tới: <b>#{product.discountPercentage}%</b>
                     if (product.stock)
-                        div(class="product-stock mt-2")
-                            span Số lượng: <b>#{product.stock}</b>
-                    if (product.description)
-                        div(class="product-description mt-2")
-                            p Mô tả: #{product.description}
+                        div(class="product-stock my-2")
+                            span Còn lại: <b>#{product.stock}</b> sản phẩm
+                    
+                    form(
+                        action=`/cart/add/${product.id}`
+                        method="POST"
+                    )   
+                        input(
+                            class="form-control mb-2 text-center"
+                            type="number"
+                            name="quantity"
+                            value="1"
+                            min="1"
+                            max=product.stock
+                        )
+                        button(
+                            class="btn btn-success btn-block"
+                            type="submit"
+                        ) Thêm vào giỏ hàng
+    .container.my-5
+        .row 
+            .col-12 
+                +box-head("Mô tả sản phẩm")                   
+                if (product.description)
+                    div(class="product-description mt-2")
+                        p !{product.description}
 

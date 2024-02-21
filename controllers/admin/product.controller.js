@@ -193,6 +193,7 @@ module.exports.createPost = async (req, res) => {
     req.body.discountPercentage = parseInt(req.body.discountPercentage)
     req.body.stock = parseInt(req.body.stock)
 
+
     if(req.body.position == ""){
         const countProducts = await Product.countDocuments()
         req.body.position = countProducts + 1   

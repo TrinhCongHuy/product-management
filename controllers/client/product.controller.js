@@ -19,10 +19,10 @@ module.exports.index = async (req, res) => {
     })
 }
 
-// [GET] /product/:slug
+// [GET] /product/detail/:slugProduct
 module.exports.detail = async (req, res) => {
     try {
-        const slug = req.params.slug
+        const slug = req.params.slugProduct
         const find = {
             slug: slug,
             status: "active",
@@ -30,6 +30,16 @@ module.exports.detail = async (req, res) => {
         }
 
         const product = await Product.findOne(find)
+
+        if(product.product_category_id) {
+            const category = await ProductCategory.findOne({
+                _id: product.product_category_id,
+                deleted: false,
+                status: 'active'
+            })
+            product.category = category
+        }
+        product.priceNew = productsHelper.priceNewProduct(product)
 
         res.render('client/pages/products/detail', {
             titlePage: product.title,

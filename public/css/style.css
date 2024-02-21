@@ -159,3 +159,38 @@ a:hover {
     display: block;
 }
 /* End sub-menu */
+
+/* product-detail */
+.product-detail {
+    border-bottom: 1px solid #d3d1d1;
+}
+.product-detail .product-priceNew {
+    font-size: 22px;
+    color: #d0011b;
+}
+.product-detail .product-price {
+    font-size: 14px;
+    text-decoration: line-through;
+    color: #999;
+}
+.product-detail .product-discountPercentage b {
+    padding: 3px 5px;
+    background-color: #d0011b;
+    color: #fff;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+.product-detail .product-stock b {
+    padding: 3px 5px;
+    background-color: #2e8e27;
+    color: #fff;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -ms-border-radius: 5px;
+    -o-border-radius: 5px;
+}
+/* End product-detail */
