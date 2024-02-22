@@ -33,3 +33,6 @@ header(class="header")
                             -const pathProduct = '/products'
                             a(href=pathProduct) Sản phẩm 
                             +sub-menu(layoutProductsCategory, pathProduct)
+                        li 
+                            a(class="mini-cart" href='/cart') Giỏ hàng
+                                span(class="product-number") #{miniCart ? miniCart.totalProduct : "0"}
