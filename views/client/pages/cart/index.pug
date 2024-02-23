@@ -1,8 +1,10 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
 
 
 block main
+    +alert-success(3000)
     .container.my-3 
         .row
             .col-12 
@@ -46,3 +48,4 @@ block main
                 h3(class="text-right") Tổng đơn hàng: #{cartDetail.totalPriceCart} $
                 div(class="text-right mt-3")
                     a(href="/checkout" class="btn btn-success") Thanh toán
+    script(src="/js/cart.js") 
