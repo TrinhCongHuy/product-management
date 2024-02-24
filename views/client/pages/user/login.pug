@@ -1,25 +1,18 @@
 extends ../../layouts/default.pug
 include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
 
 
 block main
+    +alert-error(3000)
     .container.my-5
         .row.justify-content-center
             .col-6
-                h1(class="text-center") Đăng ký tài khoản 
+                h1(class="text-center") Đăng nhập tài khoản 
                 form(
-                    action="/user/register"
+                    action="/user/login"
                     method="POST"
                 ) 
-                    div(class="form-group")
-                        label(for="fullName") Họ tên 
-                        input(
-                            class="form-control"
-                            type="text"
-                            id="fullName"
-                            name="fullName"
-                            require
-                        ) 
                     div(class="form-group")
                         label(for="email") Email 
                         input(
@@ -42,5 +35,5 @@ block main
                         button(
                             type="text"
                             class="btn btn-primary btn-block"
-                        ) Đăng ký
+                        ) Đăng nhập
         
