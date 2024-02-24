@@ -1,7 +1,6 @@
 const Cart = require('../../models/cart.model')
 
 module.exports.cartId = async (req, res, next) => {
-    
     if (!req.cookies.cartId) {
         const cart = new Cart()
         await cart.save()
@@ -14,6 +13,7 @@ module.exports.cartId = async (req, res, next) => {
         const cart = await Cart.findOne({
             _id: cartId
         })
+        
         const totalProduct = cart.products.reduce((total, item) => {
             return total + item.quantity
         }, 0)
