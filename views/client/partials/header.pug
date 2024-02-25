@@ -37,7 +37,10 @@ header(class="header")
                             a(class="mini-cart" href='/cart') Giỏ hàng
                                 span(class="product-number") #{miniCart ? miniCart.totalProduct : "0"}
                         if(user)
-                            a(class="" href='/user/logout') Đăng xuất
+                            li
+                                a(class="" href='/user/info') #{user.fullName}
+                            li
+                                a(class="" href='/user/logout') Đăng xuất
                         else
                             li 
                                 a(class="" href='/user/register') Đăng ký

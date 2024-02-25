@@ -2,6 +2,7 @@ const User = require('../../models/user.model')
 const ForgotPassword = require('../../models/forgot-password.model')
 const md5 = require('md5')
 const generate = require('../../helpers/generate')
+const sendMailHelper = require('../../helpers/sendMail')
 
 // [GET] /register
 module.exports.register = async (req, res) => {
@@ -25,6 +26,7 @@ module.exports.registerPost = async (req, res) => {
     }
 
     req.body.password = md5(req.body.password)
+
     const user = new User(req.body)
     await user.save();
 
@@ -46,14 +48,11 @@ module.exports.loginPost = async (req, res) => {
     const email = req.body.email
     const password = req.body.password
 
-    console.log(req.body)
 
     const user = await User.findOne({
         email: email,
         deleted: false
     })
-
-    console.log(user)
 
     if (!user) {
         req.flash('error', `Email không tồn tại!`);
@@ -62,7 +61,7 @@ module.exports.loginPost = async (req, res) => {
     }
 
     if(md5(password) != user.password) {
-        req.flash('error', `Sai khẩu khẩu!`);
+        req.flash('error', `Sai mật khẩu!`);
         res.redirect('back')
         return;
     }
@@ -108,6 +107,7 @@ module.exports.forgotPasswordPost = async (req, res) => {
         return;
     }
 
+    // Tạo mã OTP và lưu OTP, email vào collection
     const otp = generate.generateRandomNumber(6)
 
     const objectForgotPassword = {
@@ -121,6 +121,13 @@ module.exports.forgotPasswordPost = async (req, res) => {
 
     console.log(forgotPassword)
 
+    // Thực hiện gửi email để lấy mã
+
+    const subject = "Mã OTP xác minh lấy lại mật khẩu!"
+    const html = `Mã OTP lấy lại mật khẩu là ${otp}. Thời hạn sử dụng là 3 phút. Lưu ý: Không để lộ mã OTP.`
+
+    sendMailHelper.sendMail(email, subject, html)
+
     res.redirect(`/user/password/otp?email=${email}`)
 }
 
@@ -128,7 +135,7 @@ module.exports.forgotPasswordPost = async (req, res) => {
 module.exports.passwordOtp = async (req, res) => {
     const email = req.query.email
 
-    res.render('client/pages/user/password-otp', {
+    res.render('client/pages/user/otp-password', {
         titlePage: "Gửi mã OTP",
         email: email
     })
@@ -138,9 +145,6 @@ module.exports.passwordOtp = async (req, res) => {
 module.exports.passwordOtpPost = async (req, res) => {
     const email = req.body.email
     const otp = req.body.otp
-
-    console.log(email)
-    console.log(otp)
 
     const result = await ForgotPassword.findOne({
         email: email,
@@ -159,5 +163,45 @@ module.exports.passwordOtpPost = async (req, res) => {
 
     res.cookie("tokenUser", user.tokenUser)
 
-    res.redirect('/user/password/resetPassword')
+    res.redirect('/user/password/reset')
+}
+
+// [GET] /password/reset
+module.exports.passwordReset = async (req, res) => {
+
+    res.render('client/pages/user/reset-password', {
+        titlePage: "Đổi mật khẩu"
+    })
+}
+
+
+// [POST] /password/reset
+module.exports.passwordResetPost = async (req, res) => {
+    const password = req.body.password
+    const tokenUser = req.cookies.tokenUser
+
+    await User.updateOne(
+        {
+            tokenUser: tokenUser
+        },
+        {
+            password: password
+        }
+    )
+
+   res.redirect("/")
+}
+
+// [GET] /info
+module.exports.infoUser = async (req, res) => {
+    const tokenUser = req.cookies.tokenUser
+
+    const user = await User.findOne({
+        tokenUser: tokenUser
+    }).select("fullName email status")
+
+    res.render('client/pages/user/info-user', {
+        titlePage: "Thông tin cá nhân",
+        user: user
+    })
 }
