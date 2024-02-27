@@ -12,6 +12,11 @@ const routeAdmin = require('./routes/admin/index.route')
 const systemConfig = require('./config/system')
 const moment = require("moment")
 
+// socket.io
+const http = require('http');
+const { Server } = require("socket.io");
+
+
 database.connect()
 const app = express()
 const port = process.env.PORT
@@ -35,11 +40,25 @@ app.locals.moment = moment
 
 app.use(express.static(`${__dirname}/public`))
 
+// socket.io
+const server = http.createServer(app);
+const io = new Server(server);
 
+
+
+io.on('connection', (socket) => {
+    console.log('a user connected');
+});
 
 route(app)
 routeAdmin(app)
 
-app.listen(port, () => {
+app.get("*", (req, res) => {
+    res.render("client/pages/error/404"), {
+        titlePage: "404 Not Found"
+    }
+})
+
+server.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
 })
