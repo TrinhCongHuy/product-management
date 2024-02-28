@@ -11,6 +11,7 @@ if (formSendData) {
         if(content) {
             socket.emit("CLIENT_SEND_MESSAGE", content)
             e.target.elements.content.value = ""
+            socket.emit("CLIENT_SEND_TYPING", "hidden")
         }
     })
 }
@@ -20,6 +21,7 @@ if (formSendData) {
 socket.on("SERVER_RETURN_MESSAGE", (data) => {
     const myId = document.querySelector("[my-id]").getAttribute("my-id")
     const body = document.querySelector(".chat .chat-body")
+    const boxTyping = document.querySelector(".chat .chat-list-typing")
 
     const div = document.createElement("div")
     
@@ -37,7 +39,7 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
         <div class="chat-content"> ${data.content} </div> 
     `;
 
-    body.appendChild(div)
+    body.insertBefore(div, boxTyping)
 
     body.scrollTop = body.scrollHeight
 })
@@ -50,16 +52,19 @@ if(bodyChat) {
 }
 // End Scroll chat to bottom
 
-// emoji-picker
-const emojiPicker = document.querySelector('emoji-picker')
-if (emojiPicker) {
-    const input = document.querySelector(".chat .chat-foot input[name='content']")
-    emojiPicker.addEventListener('emoji-click', (e) => {
-        const icon = e.detail.unicode
-            input.value = input.value + icon
-    })
-}
 
+// show typing
+var timeOut;
+const showTyping = () => {
+    socket.emit("CLIENT_SEND_TYPING", "show")
+
+    clearTimeout(timeOut)
+
+    timeOut = setTimeout(() => {
+        socket.emit("CLIENT_SEND_TYPING", "hidden")
+    },3000)
+}
+// emoji-picker
 const btnIcon = document.querySelector('.btn-icon')
 if (btnIcon) {
     const tooltip = document.querySelector('.tooltip')
@@ -70,4 +75,65 @@ if (btnIcon) {
     }
 }
 
+
+
+const emojiPicker = document.querySelector('emoji-picker')
+if (emojiPicker) {
+    const inputChat = document.querySelector(".chat .chat-foot input[name='content']")
+    emojiPicker.addEventListener('emoji-click', (e) => {
+        const icon = e.detail.unicode
+        inputChat.value = inputChat.value + icon
+
+        const end = inputChat.value.length
+        inputChat.setSelectionRange(end, end)
+        inputChat.focus()
+        
+        showTyping()
+    })
+
+
+    inputChat.addEventListener("keyup", () => {
+
+        showTyping()
+        
+    })
+}
+
 // End emoji-picker
+
+// SERVER_RETURN_TYPING
+const elementListTyping = document.querySelector(".chat .chat-list-typing")
+if(elementListTyping) {
+    socket.on("SERVER_RETURN_TYPING", (data) => {
+        if(data.type == "show") {
+            const exitTyping = elementListTyping.querySelector(`[user-id="${data.userId}"]`)
+    
+            if (!exitTyping) {
+                const boxTyping = document.createElement("div")
+                boxTyping.classList.add("box-typing")
+                boxTyping.setAttribute("user-id", data.userId)
+
+                boxTyping.innerHTML = `
+                    <div class="chat-name">${data.fullName}</div>
+                    <div class="chat-dots">
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>  
+                `
+                elementListTyping.appendChild(boxTyping)
+                bodyChat.scrollTop = bodyChat.scrollHeight
+            }
+        }else {
+            const boxTypingRemove = elementListTyping.querySelector(`[user-id="${data.userId}"]`)
+            if (boxTypingRemove) {
+                elementListTyping.removeChild(boxTypingRemove)
+            }
+        }
+
+        
+    })
+}
+
+
+// End SERVER_RETURN_TYPING

@@ -308,8 +308,8 @@ a:hover {
     font-size: 12px;
 }
 .chat .chat-incoming .chat-content{
+    width: fit-content;
     max-width: 250px;
-    flex-wrap: wrap;
     background-color: #dcd7d7;
     padding: 5px 10px;
     border-radius: 10px;
@@ -317,14 +317,14 @@ a:hover {
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
-    line-height: 1.3;
+    word-wrap: break-word;
     float: left;
     margin: 3px 0;
 }
 
 .chat .chat-outgoing .chat-content{
+    width: fit-content;
     max-width: 250px;
-    flex-wrap: wrap;
     color: #fff;
     background-color: #FE5DA3;
     padding: 5px 10px;
@@ -333,7 +333,7 @@ a:hover {
     -moz-border-radius: 10px;
     -ms-border-radius: 10px;
     -o-border-radius: 10px;
-    line-height: 1.3;
+    word-wrap: break-word;
     float: right;
     margin: 3px 0;
 }
@@ -375,4 +375,35 @@ a:hover {
 .tooltip.shown {
     visibility: visible;
     opacity: 1;
+}
+
+/* CSS styling for the typing animation */
+.chat-dots {
+    display: inline-block;
+    width: 50px;
+    margin-left: 5px;
+}
+.dot {
+    height: 8px;
+    width: 8px;
+    background-color: #555;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px;
+    animation: typingAnimation 1s infinite;
+}
+
+@keyframes typingAnimation {
+    0%, 20%, 100% {
+        transform: scale(1);
+        background-color: #555;
+    }
+    40% {
+        transform: scale(1.2);
+        background-color: #a8a6a6;
+        -webkit-transform: scale(1.2);
+        -moz-transform: scale(1.2);
+        -ms-transform: scale(1.2);
+        -o-transform: scale(1.2);
+}
 }

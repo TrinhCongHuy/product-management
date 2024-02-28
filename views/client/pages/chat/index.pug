@@ -16,8 +16,9 @@ block main
                             div(class=(chat.infoUser.id == user.id ? "chat-outgoing " : "chat-incoming"))
                                 if(chat.infoUser.id != user.id)
                                     .chat-name #{chat.infoUser.fullName}
-                                .chat-content 
-                                    | #{chat.content} 
+                                .chat-content #{chat.content} 
+                        
+                        div(class="chat-list-typing")
         
                     .chat-foot 
                         form(
