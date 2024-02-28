@@ -305,6 +305,7 @@ a:hover {
 }
 .chat .chat-incoming .chat-name{
     font-weight: 600;
+    font-size: 12px;
 }
 .chat .chat-incoming .chat-content{
     max-width: 250px;
@@ -318,6 +319,7 @@ a:hover {
     -o-border-radius: 10px;
     line-height: 1.3;
     float: left;
+    margin: 3px 0;
 }
 
 .chat .chat-outgoing .chat-content{
@@ -333,6 +335,7 @@ a:hover {
     -o-border-radius: 10px;
     line-height: 1.3;
     float: right;
+    margin: 3px 0;
 }
 
 .chat-foot {
@@ -363,4 +366,13 @@ a:hover {
     -o-border-radius: 50%;
     background-color: #FE5DA3;
     color: #fff;
+}
+
+/* icon */
+.tooltip {
+    visibility: hidden;
+}
+.tooltip.shown {
+    visibility: visible;
+    opacity: 1;
 }

@@ -38,6 +38,8 @@ header(class="header")
                                 span(class="product-number") #{miniCart ? miniCart.totalProduct : "0"}
                         if(user)
                             li
+                                a(class="" href='chat') Chat
+                            li
                                 a(class="" href='/user/info') #{user.fullName}
                             li
                                 a(class="" href='/user/logout') Đăng xuất

@@ -44,11 +44,8 @@ app.use(express.static(`${__dirname}/public`))
 const server = http.createServer(app);
 const io = new Server(server);
 
+global._io = io
 
-
-io.on('connection', (socket) => {
-    console.log('a user connected');
-});
 
 route(app)
 routeAdmin(app)

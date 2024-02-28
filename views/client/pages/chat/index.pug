@@ -10,27 +10,15 @@ block main
         
         .row 
             .col-12 
-                .chat 
+                .chat(my-id=user.id)
                     .chat-body 
-                        .chat-incoming 
-                            .chat-name Em yêu 
-                            .chat-content 
-                                | A ơi sang nhà e chơi, nhà e không có ai ở nhà hết! 
-                        .chat-outgoing  
-                            .chat-content
-                                | Thế à, oke eiu a sang liền ngay bây h 
-                        .chat-incoming 
-                            .chat-name Em yêu 
-                            .chat-content 
-                                | Nhanh nha aiu
-                        .chat-outgoing  
-                            .chat-content
-                                | A đến rồi mà có thấy ai ở nhà đâu e, khoá cửa mà?
-                        .chat-incoming 
-                            .chat-name Em yêu 
-                            .chat-content 
-                                | Thì e bảo không có ai ở nhà mà!
-                        
+                        each chat in chats
+                            div(class=(chat.infoUser.id == user.id ? "chat-outgoing " : "chat-incoming"))
+                                if(chat.infoUser.id != user.id)
+                                    .chat-name #{chat.infoUser.fullName}
+                                .chat-content 
+                                    | #{chat.content} 
+        
                     .chat-foot 
                         form(
                             class="chat-form"
@@ -41,5 +29,10 @@ block main
                                 name="content"
                                 type="text"
                             )
+                            span(class="btn-icon btn btn-light mx-2") 
+                                i.fa-regular.fa-face-smile
                             button 
-                                i.fa-solid.fa-paper-plane  
+                                i.fa-solid.fa-paper-plane 
+
+    div(class="tooltip" role="tooltip")
+        emoji-picker
