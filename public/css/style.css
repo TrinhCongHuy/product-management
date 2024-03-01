@@ -18,12 +18,15 @@ a:hover {
     justify-content: center;
     margin: auto;
 }
-.menu-list .menu-list--item a{
-    font-size: 1.1em;
+.menu-list li {
+    display: flex;
+}
+.menu-list li a{
+    font-size: 0.8em;
     color: #999;
     text-decoration: none;
 }
-.menu-list .menu-list--item:hover a {
+.menu-list li:hover a {
     color: rgb(182, 172, 105);
 }
 /*End Header */
@@ -241,12 +244,12 @@ a:hover {
 }
 .mini-cart .product-number {
     position: absolute;
-    top: -6px;
-    right: -19px;
-    width: 22px;
-    height: 22px;
+    top: -5px;
+    right: -16px;
+    width: 16px;
+    height: 16px;
     color: #fff;
-    font-size: 15px;
+    font-size: 11px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -267,15 +270,14 @@ a:hover {
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
     -o-border-radius: 5px;
-    padding: 15px;
 }
 .chat .chat-body {
     display: flex;
     flex-direction: column;
-    height: 350px;
+    height: 400px;
     overflow-y: auto;
     border-bottom: 1px solid #999;
-    padding-bottom: 10px;
+    padding: 15px;
 }
 
 /* Tùy chỉnh thanh cuộn dọc */
@@ -293,16 +295,13 @@ a:hover {
 }
 
 .chat .chat-body::-webkit-scrollbar-thumb:hover {
-    background-color: #555;
-    
+    background-color: #555; 
 }
 
 .chat .chat-body::-webkit-scrollbar-corner {
     background-color: #f1f1f1;
 }
-.chat .chat-incoming {
 
-}
 .chat .chat-incoming .chat-name{
     font-weight: 600;
     font-size: 12px;
@@ -337,15 +336,44 @@ a:hover {
     float: right;
     margin: 3px 0;
 }
+.chat .chat-image img{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin: 3px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+}
+.chat .chat-outgoing .chat-image {
+    margin-left: auto;
+    text-align: right;
+}
+.chat .chat-image-preview .label-container,
+.chat .chat-image-preview .input-container {
+    display: none;
+}
+
+.chat .chat-image-preview .custom-file-container .image-preview {
+    height: auto;
+    padding: 0;
+}
+
+.chat .chat-image-preview .image-preview-item {
+    width: 100px;
+}
 
 .chat-foot {
     margin-top: 20px;
 }
-.chat-foot form {
+.chat-foot .chat-form {
     width: 100%;
     display: flex;
+    padding: 0 15px 15px 15px;
 }
-.chat-foot form input {
+.chat-foot .chat-form input {
     width: 100%;
     flex: 1;
     border-radius: 15px;
@@ -356,7 +384,7 @@ a:hover {
     padding: 5px 10px;
     border-color: #c8c4c4;
 }
-.chat-foot form button {
+.chat-foot .chat-form button {
     width: 50px;
     border: none;
     border-radius: 50%;

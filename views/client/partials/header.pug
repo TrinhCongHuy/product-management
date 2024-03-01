@@ -3,11 +3,11 @@ include ../mixins/sub-menu.pug
 header(class="header") 
     .container 
         .row.align-items-center 
-            .col-3 
+            .col-2 
                 .header-logo 
                     a(href="/") 
                         img(class="logo-img" src=settingGeneral.logo, alt="logo") 
-            .col-4
+            .col-3
                 form(
                     action='/search'
                     method='GET'
@@ -24,7 +24,7 @@ header(class="header")
                             class="btn btn-primary"
                             type="submit"
                         ) Tìm
-            .col-5
+            .col-7
                 .header-menu 
                     ul.menu-list 
                         li.menu-list--item

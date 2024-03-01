@@ -1,5 +1,14 @@
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
 
+
+
+// UPLOAD-IMAGE
+const upload = new FileUploadWithPreview.FileUploadWithPreview('upload-image', {
+    multiple: true,
+    maxFileCount: 6
+});
+
+
 // CLIENT_SEND_MESSAGE
 const formSendData = document.querySelector(".chat .chat-form")
 
@@ -7,10 +16,16 @@ if (formSendData) {
     formSendData.addEventListener("submit", (e) => {
         e.preventDefault();
         const content = e.target.elements.content.value
+        const images = upload.cachedFileArray || []
 
-        if(content) {
-            socket.emit("CLIENT_SEND_MESSAGE", content)
+        if(content || images.length > 0) {
+            socket.emit("CLIENT_SEND_MESSAGE", {
+                content: content,
+                images: images
+            })
             e.target.elements.content.value = ""
+            upload.resetPreviewPanel(); // clear all selected images
+
             socket.emit("CLIENT_SEND_TYPING", "hidden")
         }
     })
@@ -25,7 +40,9 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
 
     const div = document.createElement("div")
     
-    let htmlFullName = ""
+    let htmlFullName = "";
+    let htmlContent = "";
+    let htmlImages = ""
 
     if(myId == data.userId) {
         div.classList.add("chat-outgoing")
@@ -34,9 +51,22 @@ socket.on("SERVER_RETURN_MESSAGE", (data) => {
         htmlFullName = `<div class="chat-name"> ${data.fullName} </div> `
     }
 
+    if(data.content) {
+        htmlContent = `<div class="chat-content"> ${data.content} </div> `
+    }
+
+    if(data.images) {
+        htmlImages += `<div class="chat-image">`
+        for (const image of data.images) {
+            htmlImages += `<img src="${image}">`
+        }
+        htmlImages += `</div>`
+    }
+
     div.innerHTML = `
         ${htmlFullName}
-        <div class="chat-content"> ${data.content} </div> 
+        ${htmlContent}
+        ${htmlImages}
     `;
 
     body.insertBefore(div, boxTyping)
@@ -87,7 +117,7 @@ if (emojiPicker) {
         const end = inputChat.value.length
         inputChat.setSelectionRange(end, end)
         inputChat.focus()
-        
+
         showTyping()
     })
 
@@ -134,6 +164,5 @@ if(elementListTyping) {
         
     })
 }
-
 
 // End SERVER_RETURN_TYPING

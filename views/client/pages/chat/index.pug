@@ -13,13 +13,21 @@ block main
                 .chat(my-id=user.id)
                     .chat-body 
                         each chat in chats
-                            div(class=(chat.infoUser.id == user.id ? "chat-outgoing " : "chat-incoming"))
+                            div(class=(chat.infoUser.id == user.id ? "chat-outgoing" : "chat-incoming"))
                                 if(chat.infoUser.id != user.id)
                                     .chat-name #{chat.infoUser.fullName}
-                                .chat-content #{chat.content} 
+                                if(chat.content)
+                                    .chat-content #{chat.content} 
+                                if(chat.images)
+                                    .chat-image
+                                        each image in chat.images 
+                                            img(src=image)
                         
                         div(class="chat-list-typing")
         
+                    .chat-image-preview 
+                        div(class="custom-file-container" data-upload-id="upload-image")
+
                     .chat-foot 
                         form(
                             class="chat-form"
@@ -30,6 +38,8 @@ block main
                                 name="content"
                                 type="text"
                             )
+                            label(for="file-upload-with-preview-upload-image" class="btn btn-light mx-2 mb-0") 
+                                i.fa-solid.fa-image
                             span(class="btn-icon btn btn-light mx-2") 
                                 i.fa-regular.fa-face-smile
                             button 
@@ -37,3 +47,5 @@ block main
 
     div(class="tooltip" role="tooltip")
         emoji-picker
+    
+    
