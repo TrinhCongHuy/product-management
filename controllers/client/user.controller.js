@@ -28,7 +28,12 @@ module.exports.registerPost = async (req, res) => {
 
     req.body.password = md5(req.body.password)
 
-    const user = new User(req.body)
+    const user = new User({
+        fullName: req.body.fullName,
+        email: req.body.email,
+        password: req.body.password,
+        tokenUser: generate.generateRandomString(20)
+    })
     await user.save();
 
     res.cookie("tokenUser", user.tokenUser)
@@ -129,8 +134,6 @@ module.exports.forgotPasswordPost = async (req, res) => {
 
     const forgotPassword = new ForgotPassword(objectForgotPassword)
     await forgotPassword.save()
-
-    console.log(forgotPassword)
 
     // Thực hiện gửi email để lấy mã
 
